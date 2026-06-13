@@ -21,5 +21,6 @@ namespace WaterWiseV2.Control.User
         {
             return _penggunaanRepo.GetByUserId(_currentUser.Id_user);
         }
+        
     }
 }

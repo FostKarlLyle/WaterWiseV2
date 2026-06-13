@@ -32,5 +32,6 @@ namespace WaterWiseV2.Control.User
         {
             return _currentUser.Status_akun;
         }
+        
     }
 }
