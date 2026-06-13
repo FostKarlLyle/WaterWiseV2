@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WaterWiseV2.Model
 {
-    internal class M_PenggunaanAir
+    public class M_PenggunaanAir
     {
         public int Id_penggunaan { get; set; }
         public int Id_user { get; set; }

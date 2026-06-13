@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WaterWiseV2.Model
 {
-    internal class M_Laporan
+    public class M_Laporan
     {
         public int Id_laporan { get; set; }
         public int Id_akun { get; set; }

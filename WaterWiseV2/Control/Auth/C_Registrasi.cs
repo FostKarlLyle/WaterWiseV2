@@ -10,7 +10,7 @@ namespace WaterWiseV2.Control.Auth
     {
         private UserRepository _userRepo;
 
-        public C_Register()
+        public C_Registrasi()
         {
             _userRepo = new UserRepository();
         }

@@ -39,7 +39,7 @@
             // 
             textboxUsername.BackColor = Color.White;
             textboxUsername.BorderStyle = BorderStyle.None;
-            textboxUsername.Location = new Point(547, 249);
+            textboxUsername.Location = new Point(547, 251);
             textboxUsername.Multiline = true;
             textboxUsername.Name = "textboxUsername";
             textboxUsername.Size = new Size(373, 23);
@@ -50,7 +50,7 @@
             // 
             textboxPassword.BackColor = Color.White;
             textboxPassword.BorderStyle = BorderStyle.None;
-            textboxPassword.Location = new Point(547, 340);
+            textboxPassword.Location = new Point(547, 341);
             textboxPassword.Multiline = true;
             textboxPassword.Name = "textboxPassword";
             textboxPassword.Size = new Size(373, 23);

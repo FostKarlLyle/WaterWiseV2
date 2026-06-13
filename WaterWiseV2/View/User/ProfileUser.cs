@@ -5,170 +5,140 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WaterWiseV2.Control.User;
+using WaterWiseV2.Helper;
 using WaterWiseV2.Model;
 
 namespace WaterWiseV2.View.User
 {
     public partial class ProfileUser : Form
     {
-        public ProfileUser()
-        {
-            InitializeComponent();
-        }
-
         private M_User _currentUser;
-        private C_UserProfil _userProfilController;
+        private C_EditProfile _userProfilController;
         private bool _isEditMode = false;
-
-        // Data sementara untuk edit
-        private string _tempNama;
-        private string _tempEmail;
-        private string _tempNoTelepon;
 
         public ProfileUser(M_User user)
         {
             InitializeComponent();
             _currentUser = user;
-            _userProfilController = new C_UserProfil(user);
+            _userProfilController = new C_EditProfile(user);
             LoadProfile();
+            SetPermanentReadOnlyFields();
             SetEditMode(false);
         }
 
-        // Load data ke label-label
+        // Load data user ke TextBox
         private void LoadProfile()
         {
-            // Header
-            lblNamaHeader.Text = _currentUser.Nama;
-            lblEmailHeader.Text = _currentUser.Email;
-
-            // Detail
-            lblNamaValue.Text = _currentUser.Nama;
-            lblEmailValue.Text = _currentUser.Email;
-            lblNoKKValue.Text = _currentUser.No_kk;
-            lblUsernameValue.Text = _currentUser.Username;
-            lblNoTeleponValue.Text = _currentUser.No_telepon;
-            lblJumlahKeluargaValue.Text = _currentUser.Jumlah_anggota.ToString() + " orang";
+            textboxNama.Text = _currentUser.Nama;
+            textboxEmail.Text = _currentUser.Email;
+            textboxNoKK.Text = _currentUser.No_kk;
+            textboxUsername.Text = _currentUser.Username;
+            textboxNoTelp.Text = _currentUser.No_telepon;
+            textboxJumlahKeluarga.Text = _currentUser.Jumlah_anggota.ToString() + " orang";
         }
 
-        // Set mode edit
+        // Field yang SELALU ReadOnly (permanen, tidak bisa diedit)
+        private void SetPermanentReadOnlyFields()
+        {
+            textboxNoKK.ReadOnly = true;
+            textboxUsername.ReadOnly = true;
+            textboxJumlahKeluarga.ReadOnly = true;
+
+            // Styling untuk ReadOnly permanen
+            textboxNoKK.BackColor = System.Drawing.SystemColors.ControlLight;
+            textboxUsername.BackColor = System.Drawing.SystemColors.ControlLight;
+            textboxJumlahKeluarga.BackColor = System.Drawing.SystemColors.ControlLight;
+        }
+
+        // Set mode edit (true = bisa edit, false = read only)
         private void SetEditMode(bool isEdit)
         {
             _isEditMode = isEdit;
 
+            // Field yang BISA diedit saat mode edit
+            textboxNama.ReadOnly = !isEdit;
+            textboxEmail.ReadOnly = !isEdit;
+            textboxNoTelp.ReadOnly = !isEdit;
+
+            // Ubah warna background saat edit mode
             if (isEdit)
             {
-                // Ganti label jadi textbox untuk edit
-                SwitchLabelToTextBox();
-                btnEdit.Visible = false;
-                btnSimpan.Visible = true;
+                textboxNama.BackColor = System.Drawing.Color.White;
+                textboxEmail.BackColor = System.Drawing.Color.White;
+                textboxNoTelp.BackColor = System.Drawing.Color.White;
             }
             else
             {
-                // Ganti textbox jadi label
-                SwitchTextBoxToLabel();
-                btnEdit.Visible = true;
-                btnSimpan.Visible = false;
+                textboxNama.BackColor = System.Drawing.SystemColors.ControlLight;
+                textboxEmail.BackColor = System.Drawing.SystemColors.ControlLight;
+                textboxNoTelp.BackColor = System.Drawing.SystemColors.ControlLight;
             }
-        }
 
-        // Ganti label jadi textbox (mode edit)
-        private void SwitchLabelToTextBox()
-        {
-            // Simpan nilai lama
-            _tempNama = lblNamaValue.Text;
-            _tempEmail = lblEmailValue.Text;
-            _tempNoTelepon = lblNoTeleponValue.Text;
-
-            // Sembunyikan label
-            lblNamaValue.Visible = false;
-            lblEmailValue.Visible = false;
-            lblNoTeleponValue.Visible = false;
-
-            // Tampilkan textbox
-            txtEditNama.Visible = true;
-            txtEditEmail.Visible = true;
-            txtEditNoTelepon.Visible = true;
-
-            // Isi textbox dengan nilai saat ini
-            txtEditNama.Text = _tempNama;
-            txtEditEmail.Text = _tempEmail;
-            txtEditNoTelepon.Text = _tempNoTelepon;
-        }
-
-        // Ganti textbox jadi label (mode read only)
-        private void SwitchTextBoxToLabel()
-        {
-            // Sembunyikan textbox
-            txtEditNama.Visible = false;
-            txtEditEmail.Visible = false;
-            txtEditNoTelepon.Visible = false;
-
-            // Tampilkan label
-            lblNamaValue.Visible = true;
-            lblEmailValue.Visible = true;
-            lblNoTeleponValue.Visible = true;
+            // Atur visibilitas tombol
+            buttonEdit.Visible = !isEdit;   // Edit muncul saat read only
+            btnSimpan.Visible = isEdit;  // Simpan muncul saat edit mode
         }
 
         // Tombol EDIT
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void buttonEdit_Click(object sender, EventArgs e)
         {
             SetEditMode(true);
+            textboxNama.Focus();
         }
 
         // Tombol SIMPAN
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            // Validasi
-            if (string.IsNullOrWhiteSpace(txtEditNama.Text))
+            // Validasi input
+            if (string.IsNullOrWhiteSpace(textboxNama.Text))
             {
                 MessageBox.Show("Nama tidak boleh kosong!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtEditEmail.Text) ||
-                !txtEditEmail.Text.Contains("@") ||
-                !txtEditEmail.Text.Contains("."))
-            {
-                MessageBox.Show("Email tidak valid!", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtEditNoTelepon.Text))
+            if (string.IsNullOrWhiteSpace(textboxNoTelp.Text))
             {
                 MessageBox.Show("No telepon tidak boleh kosong!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Update ke database
+            if (string.IsNullOrWhiteSpace(textboxEmail.Text))
+            {
+                MessageBox.Show("Email tidak boleh kosong!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!textboxEmail.Text.Contains("@") || !textboxEmail.Text.Contains("."))
+            {
+                MessageBox.Show("Email tidak valid!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Update profil ke database
             bool berhasil = _userProfilController.UpdateProfil(
-                txtEditNama.Text.Trim(),
-                txtEditNoTelepon.Text.Trim(),
-                txtEditEmail.Text.Trim()
+                textboxNama.Text.Trim(),
+                textboxNoTelp.Text.Trim(),
+                textboxEmail.Text.Trim()
             );
 
             if (berhasil)
             {
-                // Refresh data
+                // Refresh data current user
                 _currentUser = _userProfilController.GetUserData();
                 LoadProfile();
                 SetEditMode(false);
             }
         }
 
-        // Tombol Kembali ke Dashboard
-        private void btnKembali_Click(object sender, EventArgs e)
-        {
-            DashboardUser dashboardForm = new DashboardUser(_currentUser);
-            dashboardForm.Show();
-            this.Close();
-        }
-
+        // Tombol Dashboard User
         private void buttonUtama_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToDashboardUser(_currentUser, this);
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
@@ -176,34 +146,28 @@ namespace WaterWiseV2.View.User
 
         }
 
+        // Tombol Ambil Air
         private void btnAmbilAir_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToAmbilAirUser(_currentUser, this);
         }
 
+        // Tombol History
         private void btnHistory_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToHistoryUser(_currentUser, this);
         }
 
+        // Tombol Lapor Keluhan
         private void btnLapor_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToLaporKeluhanUser(_currentUser, this);
         }
 
+        // Tombol Log Out
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void buttonEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSimpan_Click(object sender, EventArgs e)
-        {
-
+            NavigationHelper.Logout(this);
         }
     }
 }

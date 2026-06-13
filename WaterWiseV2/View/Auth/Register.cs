@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WaterWiseV2.Helper;
 
 namespace WaterWiseV2.View.Auth
 {
@@ -18,11 +19,13 @@ namespace WaterWiseV2.View.Auth
         private void btnDaftar_Click(object sender, EventArgs e)
         {
 
+       
+
         }
 
         private void linkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            NavigationHelper.GoToLogin(this);
         }
     }
 }

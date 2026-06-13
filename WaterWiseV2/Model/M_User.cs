@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WaterWiseV2.Model
 {
-    internal class M_User : M_Akun
+    public class M_User : M_Akun
     {
         public int Id_user { get; set; }
         public string No_kk { get; set; }

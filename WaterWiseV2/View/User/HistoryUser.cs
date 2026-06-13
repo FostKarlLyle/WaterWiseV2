@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WaterWiseV2.Control.User;
+using WaterWiseV2.Helper;
 using WaterWiseV2.Model;
 
 namespace WaterWiseV2.View.User
@@ -25,56 +26,78 @@ namespace WaterWiseV2.View.User
 
         private void LoadHistory()
         {
-            var riwayat = _historyController.GetRiwayat();
-            dgvHistory.DataSource = riwayat;
-
-            // Atur header kolom
-            if (dgvHistory.Columns.Count > 0)
+            try
             {
-                dgvHistory.Columns["Id_penggunaan"].HeaderText = "ID";
-                dgvHistory.Columns["Id_user"].Visible = false;
-                dgvHistory.Columns["Tanggal_penggunaan"].HeaderText = "Tanggal";
-                dgvHistory.Columns["Jumlah_air"].HeaderText = "Jumlah (L)";
-                dgvHistory.Columns["Kode_ambil"].HeaderText = "Kode Ambil";
-                dgvHistory.Columns["User"].Visible = false;
+                // Ambil data dari controller
+                var riwayat = _historyController.GetRiwayat();
 
-                // Atur lebar
-                dgvHistory.Columns["Tanggal_penggunaan"].Width = 150;
-                dgvHistory.Columns["Jumlah_air"].Width = 100;
-                dgvHistory.Columns["Kode_ambil"].Width = 200;
+                // Kasih data ke DataGridView
+                dgvHistory.DataSource = riwayat;
+
+                // Biarkan DataGridView mengatur sendiri lebarnya
+                dgvHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // (OPSIONAL) Kalau mau ganti header text, lakukan dengan aman
+                if (dgvHistory.Columns.Contains("Tanggal_penggunaan"))
+                    dgvHistory.Columns["Tanggal_penggunaan"].HeaderText = "Tanggal";
+
+                if (dgvHistory.Columns.Contains("Jumlah_air"))
+                    dgvHistory.Columns["Jumlah_air"].HeaderText = "Jumlah (L)";
+
+                if (dgvHistory.Columns.Contains("Kode_ambil"))
+                    dgvHistory.Columns["Kode_ambil"].HeaderText = "Kode Ambil";
+
+                // Sembunyikan kolom yang tidak perlu dilihat user
+                if (dgvHistory.Columns.Contains("Id_penggunaan"))
+                    dgvHistory.Columns["Id_penggunaan"].Visible = false;
+
+                if (dgvHistory.Columns.Contains("Id_user"))
+                    dgvHistory.Columns["Id_user"].Visible = false;
+
+                if (dgvHistory.Columns.Contains("User"))
+                    dgvHistory.Columns["User"].Visible = false;
             }
-
-            dgvHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Gagal memuat riwayat: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // Tombol Dashboard User
         private void buttonUtama_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToDashboardUser(_currentUser, this);
         }
 
+        // Tombol Profile
         private void btnProfile_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToProfileUser(_currentUser, this);
         }
 
+        // Tombol Ambil Air
         private void btnAmbilAir_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToAmbilAirUser(_currentUser, this);
         }
 
+        // Tombol History
         private void btnHistory_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToHistoryUser(_currentUser, this);
         }
 
+        //Tombol Laporan Keluhan
         private void btnLapor_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToLaporKeluhanUser(_currentUser, this);
         }
 
+        // Tombol Log Out
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.Logout(this);
         }
     }
 }

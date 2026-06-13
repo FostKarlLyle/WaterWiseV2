@@ -82,5 +82,21 @@ namespace WaterWiseV2.Repositories
             }
         }
 
+        // CEK apakah kode unik (belum pernah dipakai)
+        public bool IsKodeUnique(string kodeAmbil)
+        {
+            string query = "SELECT COUNT(*) FROM penggunaan_air WHERE kode_ambil = @kode";
+
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@kode", kodeAmbil);
+                    long count = (long)cmd.ExecuteScalar();
+                    return count == 0;  // True jika belum ada
+                }
+            }
+        }
     }
 }

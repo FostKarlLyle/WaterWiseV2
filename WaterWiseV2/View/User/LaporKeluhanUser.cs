@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WaterWiseV2.Control.User;
+using WaterWiseV2.Helper;
 using WaterWiseV2.Model;
 
 namespace WaterWiseV2.View.User
@@ -22,7 +23,7 @@ namespace WaterWiseV2.View.User
             _laporanController = new C_Laporan(user);
         }
 
-        private void btnKirim_Click(object sender, EventArgs e)
+        private void btnKirimKeluhan_Click(object sender, EventArgs e)
         {
             string isiLaporan = textboxDeskripsi.Text.Trim();
 
@@ -44,30 +45,23 @@ namespace WaterWiseV2.View.User
 
         private void buttonUtama_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToDashboardUser(_currentUser, this);
         }
         private void btnProfile_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToProfileUser(_currentUser, this);
         }
         private void btnAmbilAir_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToAmbilAirUser(_currentUser, this);
         }
         private void btnHistory_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.GoToHistoryUser(_currentUser, this);
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-
+            NavigationHelper.Logout(this);
         }
-
-        private void btnKirimKeluhan_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 }
