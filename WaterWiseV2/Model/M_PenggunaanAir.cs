@@ -12,7 +12,7 @@ namespace WaterWiseV2.Model
         public DateTime Tanggal_penggunaan { get; set; } = DateTime.Now;
         public decimal Jumlah_air { get; set; }
 
-        // Navigation property
+      
         public M_User User { get; set; }
 
         public M_PenggunaanAir() { }

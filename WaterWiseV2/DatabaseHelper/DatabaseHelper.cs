@@ -8,7 +8,7 @@ namespace WaterWiseV2.DatabaseHealper
 {
     internal class DatabaseHelper
     {
-        // ⚠️ GANTI DENGAN KONEKSI DATABASE KAMU ⚠️
+        
         private static string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=Mahfullah;Database=WaterWise";
 
         public static NpgsqlConnection GetConnection()

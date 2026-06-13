@@ -12,7 +12,7 @@ namespace WaterWiseV2.Model
         public int Jumlah_anggota { get; set; }
         public int Limit_air { get; set; }
 
-        // Navigation property (opsional, untuk relasi)
+       
         public List<M_PenggunaanAir> RiwayatPenggunaan { get; set; }
 
         public M_User()

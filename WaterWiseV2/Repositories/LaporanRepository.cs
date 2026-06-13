@@ -9,7 +9,7 @@ namespace WaterWiseV2.Repositories
 {
     internal class LaporanRepository
     {
-        // INSERT laporan
+        
         public int Insert(M_Laporan laporan)
         {
             string query = @"

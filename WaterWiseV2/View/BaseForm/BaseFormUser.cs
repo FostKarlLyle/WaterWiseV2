@@ -16,7 +16,7 @@ namespace WaterWiseV2.View.BaseForm
             _currentUser = user;
         }
 
-        // Method navigasi
+        // method navigasi
         protected void NavigateToDashboard()
         {
             DashboardUser form = new DashboardUser(_currentUser);

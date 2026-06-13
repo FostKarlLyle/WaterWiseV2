@@ -32,7 +32,7 @@ namespace WaterWiseV2.View.User
             labelStatus.Text = _userDashboard.GetStatusAkun();
         }
 
-        // Tombol Utama (refresh halaman)
+        // tombol Utama (refresh halaman)
         private void buttonUtama_Click(object sender, EventArgs e)
         {
             LoadDashboard();  // Refresh saja, tidak perlu buka form baru

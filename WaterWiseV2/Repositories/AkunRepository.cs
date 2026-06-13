@@ -9,7 +9,7 @@ namespace WaterWiseV2.Repositories
 {
     internal class AkunRepository
     {
-        // GET akun by username (untuk login)
+        // GET akun (untuk login)
         public M_Akun GetByUsername(string username)
         {
             string query = "SELECT id_akun, username, password, nama, no_telepon, email, status_akun, role FROM akun WHERE username = @username";

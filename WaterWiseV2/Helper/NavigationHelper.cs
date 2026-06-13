@@ -10,7 +10,6 @@ namespace WaterWiseV2.Helper
 {
     internal class NavigationHelper
     {
-        // NAVIGASI USER (dengan parameter Form currentForm)
         public static void GoToDashboardUser(M_User user, Form currentForm)
         {
             DashboardUser form = new DashboardUser(user);

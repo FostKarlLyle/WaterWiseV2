@@ -16,7 +16,7 @@ namespace WaterWiseV2.View.User
         private M_User _currentUser;
         private C_AmbilAir _ambilAirController;
 
-        // Constructor
+        // construktor
         public AmbilAirUser(M_User user)
         {
             InitializeComponent();

@@ -28,7 +28,7 @@ namespace WaterWiseV2.View.User
         {
             try
             {
-                // Ambil data dari controller
+                // ambil data dari controller
                 var riwayat = _historyController.GetRiwayat();
 
                 // Kasih data ke DataGridView

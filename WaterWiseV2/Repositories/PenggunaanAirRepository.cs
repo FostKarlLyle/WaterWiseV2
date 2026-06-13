@@ -61,7 +61,7 @@ namespace WaterWiseV2.Repositories
             return list;
         }
 
-        // GET total pemakaian hari ini
+        // GET total pemakaian hari ini saja
         public decimal GetTotalPemakaianHariIni(int id_user)
         {
             string query = @"

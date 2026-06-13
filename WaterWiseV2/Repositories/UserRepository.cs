@@ -49,7 +49,7 @@ namespace WaterWiseV2.Repositories
             return list;
         }
 
-        // GET user by id_akun
+        // GET user by id akun
         public M_User GetByAkunId(int id_akun)
         {
             string query = @"
